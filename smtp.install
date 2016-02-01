@@ -9,6 +9,8 @@
  * Implements hook_install().
  */
 function smtp_install() {
+  $mail_config = \Drupal::config('system.mail');
+
   // Setting default config vars.
   \Drupal::service('config.factory')->getEditable('smtp.settings')
     ->set('smtp_on', 0)
@@ -23,6 +25,7 @@ function smtp_install() {
     ->set('smtp_allowhtml', '')
     ->set('smtp_test_address', '')
     ->set('smtp_debugging', 0)
+    ->set('prev_mail_system', $mail_config->get('interface'))
     ->save();
 }
 
