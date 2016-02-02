@@ -216,19 +216,6 @@ class SMTPConfigForm extends ConfigFormBase {
       ->set('smtp_debugging', $values['smtp_debugging'])
       ->save();
 
-    // Set as default mail system if module is enabled.
-    if ($config->get('smtp_on')) {
-      if ($mail_config['default'] != 'SMTPMailSystem') {
-        $config->set('prev_mail_system', $mail_system);
-      }
-      $mail_system['default'] = 'SMTPMailSystem';
-      $mail_config->set('interface', $mail_system)->save();
-    }
-    else {
-      $mail_system = $config->get('prev_mail_system');
-      $mail_config->set('interface', $mail_system)->save();
-    }
-
     // If an address was given, send a test e-mail message.
     if ($test_address = $values['smtp_test_address']) {
       $params['subject'] = t('Drupal SMTP test e-mail');
