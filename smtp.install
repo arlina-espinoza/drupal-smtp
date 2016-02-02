@@ -30,11 +30,10 @@ function smtp_install() {
  * Implements hook_uninstall().
  */
 function smtp_uninstall() {
-  $config = \Drupal::service('config.factory');
-  $smtp_config = $config->getEditable('smtp.settings');
+  $smtp_config = \Drupal::service('config.factory')->getEditable('smtp.settings');
 
   // Restore previous mail system.
-  $config->getEditable('system.mail')
+  \Drupal::config('system.mail')
     ->set('interface', $smtp_config->get('prev_mail_system'))
     ->save();
 
